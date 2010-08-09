@@ -325,9 +325,10 @@
 	</reporting>
 	
 	<repositories>
+		<!-- TODO: remove when 5.2 hits central -->
 		<repository>
-			<id>apache-snapshots2</id>
-			<url>https://repository.apache.org/content/repositories/orgapachetapestry-063/</url>
+			<id>apache-snapshots</id>
+			<url>https://repository.apache.org/content/groups/public</url>
 		</repository>	
 	</repositories>
 
