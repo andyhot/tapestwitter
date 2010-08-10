@@ -20,6 +20,7 @@ import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Match;
+import org.apache.tapestry5.ioc.annotations.SubModule;
 import org.apache.tapestry5.ioc.internal.services.ClasspathResourceSymbolProvider;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.AssetSource;
@@ -27,17 +28,23 @@ import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.Response;
+import org.got5.tapestry5.clientresources.ClientResourcesConstants;
+import org.got5.tapestry5.clientresources.services.AssetPathStack;
+import org.got5.tapestry5.clientresources.services.ClientResourcesModule;
+import org.got5.tapestry5.jquery.services.JQueryModule;
 
 /**
  * This module is automatically included as part of the Tapestry IoC Registry, it's a good place to
  * configure and extend Tapestry, or to place your own service definitions.
  */
+@SubModule(value = {ClientResourcesModule.class, JQueryModule.class})
 public class TapesTwitterModule
 {
 	/**
 	 * Logger de la classe
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(TapesTwitterModule.class);
+	private static final String TAPES_TWITTER_STACK = "tapestwitterstack";
 
 	public static void bind(ServiceBinder binder)
 	{
@@ -68,7 +75,20 @@ public class TapesTwitterModule
 		// header. If existing assets are changed, the version number should also
 		// change, to force the browser to download new versions.
 		configuration.add(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
+		
+        configuration.add(SymbolConstants.COMBINE_SCRIPTS, "false");
+        configuration.add(SymbolConstants.GZIP_COMPRESSION_ENABLED, "false");        
+        configuration.add(ClientResourcesConstants.JAVASCRIPT_STACK, TAPES_TWITTER_STACK);		
 	}
+	
+    public static void contributeContribuableClientInfrastructure(MappedConfiguration<String, AssetPathStack> configuration)
+    {
+        configuration.add(TAPES_TWITTER_STACK, new AssetPathStack("org/got5/tapestry5/tapestry.js",
+                "org/got5/tapestry5/jquery/jquery_1_4_2/jquery-1.4.2.js", "org/got5/tapestry5/jquery/ui_1_8/minified/jquery.ui.core.min.js",
+                "org/got5/tapestry5/jquery/ui_1_8/minified/jquery.ui.position.min.js", "org/got5/tapestry5/jquery/ui_1_8/jquery.ui.widget.js",
+                "org/got5/tapestry5/jquery/ui_1_8/minified/jquery.effects.core.min.js", "org/got5/tapestry5/jquery/tapestry-jquery.js",
+                "context:js/jquery.tapestwitter.js"));
+    }
 
 	/**
 	 * This is a service definition, the service will be named "TimingFilter". The interface,
@@ -134,23 +154,5 @@ public class TapesTwitterModule
 	{
 		providers.add("springSecurity", new ClasspathResourceSymbolProvider("config/security.properties"));
 	}
-
-	@SuppressWarnings("unchecked")
-	@Match("ClientInfrastructure")
-	public static void adviseClientInfrastructure(MethodAdviceReceiver receiver, final AssetSource source) throws SecurityException, NoSuchMethodException
-	{
-
-		MethodAdvice advice = new MethodAdvice()
-		{
-			public void advise(Invocation invocation)
-			{
-				invocation.proceed();
-				List<Asset> jsStack = (List<Asset>) invocation.getResult();
-				jsStack.add(source.getClasspathAsset("context:js/tapestwitter.js"));
-			}
-		};
-
-		receiver.adviseMethod(receiver.getInterface().getMethod("getJavascriptStack"), advice);
-	};
 
 }

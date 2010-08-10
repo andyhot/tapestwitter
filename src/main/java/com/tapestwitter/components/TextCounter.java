@@ -16,7 +16,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
  * @author lguerin
  *
  */
-@Import(library="textcounter.js")
+@Import(library="jquery.textcounter.js")
 public class TextCounter
 {
 	/**
