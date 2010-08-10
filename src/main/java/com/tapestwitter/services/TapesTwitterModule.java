@@ -1,7 +1,6 @@
 package com.tapestwitter.services;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.tapestwitter.services.impl.DataSetLoaderServiceImpl;
 import com.tapestwitter.services.impl.KaptchaProducerImpl;
@@ -10,20 +9,14 @@ import com.tapestwitter.services.impl.TapestwitterURLResolverImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.ioc.Invocation;
 import org.apache.tapestry5.ioc.MappedConfiguration;
-import org.apache.tapestry5.ioc.MethodAdvice;
-import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Local;
-import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.annotations.SubModule;
 import org.apache.tapestry5.ioc.internal.services.ClasspathResourceSymbolProvider;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
-import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
