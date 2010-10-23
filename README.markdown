@@ -10,7 +10,7 @@ TapesTwitter is a "Twitter-like" demonstration application build with Tapestry
 Build around :
 
 * Tapestry
-* Spring
+* Spring (IoC and Spring Security)
 * JPA (with Hibernate implementation)
 * HSQL
 * Unitils
@@ -19,6 +19,6 @@ Build around :
 
 This demo application has been written by :
 
-* Aresti Gonzalez Katia
-* Doin Loïc
-* Guérin Laurent
+* Aresti Gonzalez Katia (karesti)
+* Doin Loïc (ldoin)
+* Guérin Laurent (lguerin)
